@@ -184,13 +184,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <span id="more"></span>
-<h1 id="ciscn-2019-es-2"><a href="#ciscn-2019-es-2" class="headerlink" title="ciscn_2019_es_2"></a>ciscn_2019_es_2</h1><p>第一步，查看程序，32位程序，开启了NX。<br><img src="https://img-blog.csdnimg.cn/1be65761b02343bc901bc14b8f15fc2f.png" alt="图片1"><br>第二步，拖入IDA反汇编。<br><img src="https://img-blog.csdnimg.cn/e1376503131b482db38bf5c369505bcc.png" alt="图片2"><br>Main主函数：<br><img src="https://img-blog.csdnimg.cn/e1376503131b482db38bf5c369505bcc.png" alt="图片3"><br>Hack函数：存在system函数，但不能直接得到flag<br><img src="https://img-blog.csdnimg.cn/27492acfbc1942ac9f36ff1262902e9b.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAeHVhb2h1MTIz,size_20,color_FFFFFF,t_70,g_se,x_16" alt="图片4"><br>Vul函数：<br><img src="https://img-blog.csdnimg.cn/435fad0b55e040cfb2d37214f3d49913.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAeHVhb2h1MTIz,size_20,color_FFFFFF,t_70,g_se,x_16" alt="图片5"><br>  发现s距离ebp为0x28个字节，而read函数只能输入0x30个字节大小的数据，所以垃圾数据只能刚好填充到ret，而不能改变ret的值，因此不能栈溢出。现在这种情况应该用栈迁移，先构造rop链，写入system（/bin/sh)，然后再通过栈迁移到我们写入的地方，最后getshell。所以我们需要解决的问题有:1.知道我们写入数据的地址，2.构造rop链。<br>  第一个问题，我们写入数据的地址即参数s在栈上的地址=ebp-偏移量。（1).获得ebp指针的地址：vul函数刚好有两次输入和printf输出，可以通过第一次输入输出获得ebp地址（printf函数在输出时遇到’\0’会停止，那么我们可以将s参数填满，这样就没法在尾部添上’\0’）。<br>（2）偏移量由pwndbg调试出为0x38（我还没搞明白pwndbg）。<br><img src="https://img-blog.csdnimg.cn/afe3eac4a02b4c5eab325cfc5f9e4c78.png" alt="图片6"><br>第二个问题，构造payload。这里用leave_ret（leave_ret的地址随便找一个就可以）来进行栈迁移。<br><img src="https://img-blog.csdnimg.cn/eb1598e8391649689eaad8758b6653c3.png" alt="图片7"><br>第一个’aaaa’随便输，这里是因为用leave_ret进行迁移时esp会+4字节。然后输入system函数的地址，再后面的’aaaa’为system的返回地址。然后p32（ebp_addr-0x28）+’/bin/sh\x00’)即跳到ebp-0x28的地址上写入’/bin/sh\x00’。再将s参数的0x28空间补齐，然后在ebp_addr的地址上写为参数s的地址即ebp_addr-0x38，最后加上leave_ret的地址。 </p>
-<h4 id="栈迁移"><a href="#栈迁移" class="headerlink" title="栈迁移"></a>栈迁移</h4><p>leave<br>//move esp ebp 将ebp指向的地址给esp<br>//pop ebp 将esp指向的地址存放的值赋值给ebp（然后esp+4）<br>ret<br>//pop eip 将esp指向的地址存放的值赋值给eip   </p>
-<p>栈迁移的过程（萌新自己作图可能有错的地方）<br><img src="https://img-blog.csdnimg.cn/f8f83479d153408f8f6595b622bbd269.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAeHVhb2h1MTIz,size_20,color_FFFFFF,t_70,g_se,x_16" alt="图片8"><br><img src="https://img-blog.csdnimg.cn/b0995baa12d84abbbba87b957df239d0.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAeHVhb2h1MTIz,size_20,color_FFFFFF,t_70,g_se,x_16" alt="图片9">  </p>
-<h6 id="最终的exp"><a href="#最终的exp" class="headerlink" title="最终的exp"></a>最终的exp</h6><p><img src="https://img-blog.csdnimg.cn/4db9b33ba3404fe5a5acaf8d02b1ad3d.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAeHVhb2h1MTIz,size_20,color_FFFFFF,t_70,g_se,x_16" alt="图片10">  </p>
-<p>萌新的·第一篇小水文。</p>
-
+        <h1 id="ciscn-2019-es-2"><a href="#ciscn-2019-es-2" class="headerlink" title="ciscn_2019_es_2"></a>ciscn_2019_es_2</h1>
+        
+          <a class="article-more-a" href="/2022/01/07/ciscn-2019-es-2%E2%80%94%E2%80%94wp/#more">more >></a>
+        
       
 
       
@@ -314,7 +311,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.<br>
         
           <a class="article-more-a" href="/2022/01/06/hello-world/#more">more >></a>
         
