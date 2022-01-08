@@ -6,14 +6,14 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://the0hu.github.io">
-  <title>the0hu的博客</title>
+  <title>buuctf-inndy_rop_——wp | the0hu的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="buuctf-pwn-innd_rop查看文件保护32位程序，开启了nx保护。 拖入ida，直接f5会报错遇到这种情况，点击ida左上角options-&gt;general后出现如下图界面后，勾选stack pointer。然后选中报错地址的上一行，右击，然后点击change stack pointer，出现如下图界面，然后在sp那里的值前面加一个”-“就可以了。然后再按f5.进行反汇编，进入m">
+  <meta name="description" content="buuctf-pwn-inndy_rop">
 <meta property="og:type" content="article">
-<meta property="og:title" content="the0hu的博客">
-<meta property="og:url" content="https://the0hu.github.io/2022/01/08/%E3%80%90%E6%97%A0%E6%A0%87%E9%A2%98%E3%80%91/index.html">
+<meta property="og:title" content="buuctf-inndy_rop_——wp">
+<meta property="og:url" content="https://the0hu.github.io/2022/01/08/buuctf-inndy_rop/index.html">
 <meta property="og:site_name" content="the0hu的博客">
-<meta property="og:description" content="buuctf-pwn-innd_rop查看文件保护32位程序，开启了nx保护。 拖入ida，直接f5会报错遇到这种情况，点击ida左上角options-&gt;general后出现如下图界面后，勾选stack pointer。然后选中报错地址的上一行，右击，然后点击change stack pointer，出现如下图界面，然后在sp那里的值前面加一个”-“就可以了。然后再按f5.进行反汇编，进入m">
+<meta property="og:description" content="buuctf-pwn-inndy_rop">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/b4bdce85c7304ad68530f6a3ddae81a6.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAeHVhb2h1MTIz,size_20,color_FFFFFF,t_70,g_se,x_16">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/b65b964ab1ff4b469890f4729c8305df.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAeHVhb2h1MTIz,size_20,color_FFFFFF,t_70,g_se,x_16">
@@ -23,8 +23,8 @@
 <meta property="og:image" content="https://img-blog.csdnimg.cn/56af6c0bbc8a412c8b31600fffa04abf.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAeHVhb2h1MTIz,size_17,color_FFFFFF,t_70,g_se,x_16">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/b32df14696af49d6b366014486b8fbda.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAeHVhb2h1MTIz,size_20,color_FFFFFF,t_70,g_se,x_16">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/417d6e782b6f486b9370c6dac18d1989.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAeHVhb2h1MTIz,size_20,color_FFFFFF,t_70,g_se,x_16">
-<meta property="article:published_time" content="2022-01-08T08:41:42.755Z">
-<meta property="article:modified_time" content="2022-01-08T08:43:40.513Z">
+<meta property="article:published_time" content="2022-01-08T08:46:00.000Z">
+<meta property="article:modified_time" content="2022-01-08T08:53:15.670Z">
 <meta property="article:author" content="the0hu">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/b4bdce85c7304ad68530f6a3ddae81a6.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAeHVhb2h1MTIz,size_20,color_FFFFFF,t_70,g_se,x_16">
@@ -173,12 +173,28 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-【无标题】" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-buuctf-inndy_rop" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      buuctf-inndy_rop_——wp
+    </h1>
+  
+
+        
+        <a href="/2022/01/08/buuctf-inndy_rop/" class="archive-article-date">
+  	<time datetime="2022-01-08T08:46:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-01-08</time>
+</a>
+        
+      </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="buuctf-pwn-innd-rop"><a href="#buuctf-pwn-innd-rop" class="headerlink" title="buuctf-pwn-innd_rop"></a>buuctf-pwn-innd_rop</h1><h3 id="查看文件保护"><a href="#查看文件保护" class="headerlink" title="查看文件保护"></a>查看文件保护</h3><p><img src="https://img-blog.csdnimg.cn/b4bdce85c7304ad68530f6a3ddae81a6.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAeHVhb2h1MTIz,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述">32位程序，开启了nx保护。</p>
+        <h1 id="buuctf-pwn-inndy-rop"><a href="#buuctf-pwn-inndy-rop" class="headerlink" title="buuctf-pwn-inndy_rop"></a>buuctf-pwn-inndy_rop</h1><span id="more"></span>
+<h3 id="查看文件保护"><a href="#查看文件保护" class="headerlink" title="查看文件保护"></a>查看文件保护</h3><p><img src="https://img-blog.csdnimg.cn/b4bdce85c7304ad68530f6a3ddae81a6.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAeHVhb2h1MTIz,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述">32位程序，开启了nx保护。</p>
 <h3 id="拖入ida，直接f5会报错"><a href="#拖入ida，直接f5会报错" class="headerlink" title="拖入ida，直接f5会报错"></a>拖入ida，直接f5会报错</h3><p><img src="https://img-blog.csdnimg.cn/b65b964ab1ff4b469890f4729c8305df.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAeHVhb2h1MTIz,size_20,color_FFFFFF,t_70,g_se,x_16">遇到这种情况，点击ida左上角options-&gt;general后出现如下图界面后，勾选stack pointer。<br><img src="https://img-blog.csdnimg.cn/dcf5fbe35a994da58eb1c05d08c30040.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAeHVhb2h1MTIz,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述">然后选中报错地址的上一行，右击，然后点击change stack pointer，出现如下图界面，然后在sp那里的值前面加一个”-“就可以了。然后再按f5.<br><img src="https://img-blog.csdnimg.cn/67b6c34fc6c9431fbf4576a132bfeb8a.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAeHVhb2h1MTIz,size_19,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述">进行反汇编，进入main函数，只有overflow，进入overflow函数，如下图。发现溢出。但左边列表里只有静态编译的结果，所以这题无法进行常规的泄露libc之类的。<br><img src="https://img-blog.csdnimg.cn/19e041530eb5499e84d2c75359619f51.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAeHVhb2h1MTIz,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"><img src="https://img-blog.csdnimg.cn/56af6c0bbc8a412c8b31600fffa04abf.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAeHVhb2h1MTIz,size_17,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"><br>直接用ROPgadget工具，可以直接利用该程序的gadget拼凑连接成rop链。</p>
 <blockquote>
 <p>ROPgadget –binary inndy_rop –ropgadget  </p>
@@ -269,7 +285,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://the0hu.github.io/2022/01/08/%E3%80%90%E6%97%A0%E6%A0%87%E9%A2%98%E3%80%91/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://the0hu.github.io/2022/01/08/buuctf-inndy_rop/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -312,7 +328,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#buuctf-pwn-innd-rop"><span class="toc-number">1.</span> <span class="toc-text">buuctf-pwn-innd_rop</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E4%BF%9D%E6%8A%A4"><span class="toc-number">1.0.1.</span> <span class="toc-text">查看文件保护</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8B%96%E5%85%A5ida%EF%BC%8C%E7%9B%B4%E6%8E%A5f5%E4%BC%9A%E6%8A%A5%E9%94%99"><span class="toc-number">1.0.2.</span> <span class="toc-text">拖入ida，直接f5会报错</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%97%E5%88%B0flag"><span class="toc-number">1.0.3.</span> <span class="toc-text">得到flag</span></a></li></ol></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#buuctf-pwn-inndy-rop"><span class="toc-number">1.</span> <span class="toc-text">buuctf-pwn-inndy_rop</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E4%BF%9D%E6%8A%A4"><span class="toc-number">1.0.1.</span> <span class="toc-text">查看文件保护</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8B%96%E5%85%A5ida%EF%BC%8C%E7%9B%B4%E6%8E%A5f5%E4%BC%9A%E6%8A%A5%E9%94%99"><span class="toc-number">1.0.2.</span> <span class="toc-text">拖入ida，直接f5会报错</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%97%E5%88%B0flag"><span class="toc-number">1.0.3.</span> <span class="toc-text">得到flag</span></a></li></ol></li></ol></li></ol>
                     </div>
                 </span>
             </div>
