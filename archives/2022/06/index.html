@@ -6,17 +6,15 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://the0hu.github.io">
-  <title>rust的第一个多月 | the0hu的博客</title>
+  <title>Archives: 2022/6 | the0hu的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="#rust的第一个多月">
-<meta property="og:type" content="article">
-<meta property="og:title" content="rust的第一个多月">
-<meta property="og:url" content="https://the0hu.github.io/2022/04/28/rust%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%A4%9A%E6%9C%88/index.html">
+  <meta name="description" content="五颗带大一新生">
+<meta property="og:type" content="website">
+<meta property="og:title" content="the0hu的博客">
+<meta property="og:url" content="https://the0hu.github.io/archives/2022/06/index.html">
 <meta property="og:site_name" content="the0hu的博客">
-<meta property="og:description" content="#rust的第一个多月">
+<meta property="og:description" content="五颗带大一新生">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-04-28T12:18:17.000Z">
-<meta property="article:modified_time" content="2022-04-28T12:57:25.731Z">
 <meta property="article:author" content="the0hu">
 <meta name="twitter:card" content="summary">
   
@@ -164,193 +162,49 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-rust的第一个多月" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      rust的第一个多月
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2022" class="archive-year">2022</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2022/06/13/httpie/" class="archive-article-date">
+  	<time datetime="2022-06-13T02:57:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-06-13</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2022/06/13/httpie/">httpie</a>
     </h1>
   
 
-        
-        <a href="/2022/04/28/rust%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%A4%9A%E6%9C%88/" class="archive-article-date">
-  	<time datetime="2022-04-28T12:18:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-04-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>#rust的第一个多月</p>
-<span id="more"></span>
-<p>##智能指针Rc</p>
-<p>rc和arc智能指针：通过引用计数的方式，允许一个数据资源在同一时刻拥有多个所有者</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::rc::Rc;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="comment">//通过引用计数的方式，允许一个数据资源在同一时刻拥有多个所有者</span></span><br><span class="line">    <span class="comment">//Rc::new 创建了一个新的 Rc&lt;String&gt; 智能指针并赋给变量 a，该指针指向底层的字符串数据。</span></span><br><span class="line">    <span class="keyword">let</span> a = Rc::new(<span class="built_in">String</span>::from(<span class="string">&quot;hello world&quot;</span>));</span><br><span class="line"></span><br><span class="line">    <span class="comment">//引用计数的关联函数Rc::strong_count,返回值为计数1</span></span><br><span class="line">    <span class="comment">//Rc&lt;T&gt; 是一个智能指针，实现了 Deref 特征，因此无需先解开 Rc 指针</span></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;count a= &#123;&#125;,&#123;&#125;&quot;</span>,Rc::strong_count(&amp;a),a);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//Rc::clone 浅克隆了一份智能指针 Rc&lt;String&gt;，并没有克隆底层数据，因此a，b共享了底层字符串</span></span><br><span class="line">    <span class="comment">//并将该智能指针的引用计数增加到 2</span></span><br><span class="line">    <span class="keyword">let</span> b = Rc::clone(&amp;a);</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;count b = &#123;&#125;,&#123;&#125;&quot;</span>,Rc::strong_count(&amp;b),*b);</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">let</span> c = Rc::clone(&amp;b);</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;count c = &#123;&#125;,&#123;&#125;&quot;</span>,Rc::strong_count(&amp;c),c);<span class="comment">//计数为3</span></span><br><span class="line">    &#125;<span class="comment">//Rc&lt;T&gt;实现了drop特征,当c离开作用域时被释放，引用计数减一</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;after c count a= &#123;&#125;,&quot;</span>,Rc::strong_count(&amp;a));</span><br><span class="line">    <span class="built_in">drop</span>(a);</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;after drop a,count b=&#123;&#125;&quot;</span>,Rc::strong_count(&amp;b));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <div class="article-info info-on-right">
+          
+          
 
-<p>Rc&lt;<t>T&gt;是指向底层数据的不可变的引用，因此你无法通过它来修改数据<br>##智能指针Arc   </p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::sync::Arc;</span><br><span class="line"><span class="keyword">use</span> std::thread;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> s = Arc::new(<span class="built_in">String</span>::from(<span class="string">&quot;多线程漫游者&quot;</span>));</span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="number">0</span>..<span class="number">10</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> s = Arc::clone(&amp;s);</span><br><span class="line">        <span class="keyword">let</span> handle = thread::spawn(<span class="keyword">move</span> || &#123;</span><br><span class="line">           <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, s)</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>Arc&lt;T<T>&gt;使我们的数据能在多线程间进行共享<br>##智能指针Cell<br>Cell和Refcell:可以在拥有不可变引用的同时修改目标数据    </p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::cell::Cell;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">  <span class="keyword">let</span> c = Cell::new(<span class="string">&quot;asdf&quot;</span>);</span><br><span class="line">  <span class="keyword">let</span> one = c.get();</span><br><span class="line">  c.set(<span class="string">&quot;qwer&quot;</span>);</span><br><span class="line">  <span class="keyword">let</span> two = c.get();</span><br><span class="line">  <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;,&#123;&#125;&quot;</span>, one, two);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>“asdf” 是 &amp;str 类型，它实现了 Copy 特征<br>c.get 用来取值，c.set 用来设置新值<br>##智能指针Refcell<br>rc和Refcell一起使用   </p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::cell::RefCell;</span><br><span class="line"><span class="keyword">use</span> std::rc::Rc;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> s = Rc::new(RefCell::new(<span class="string">&quot;hello world&quot;</span>.to_string()));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> s1 = s.clone();</span><br><span class="line">    <span class="keyword">let</span> s2 = s.clone();</span><br><span class="line">    <span class="comment">// let mut s2 = s.borrow_mut();</span></span><br><span class="line">    s2.borrow_mut().push_str(<span class="string">&quot;, on yeah!&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;:?&#125;\n&#123;:?&#125;\n&#123;:?&#125;&quot;</span>, s, s1, s2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>RefCell { value: “hello world, on yeah!” }<br>RefCell { value: “hello world, on yeah!” }<br>RefCell { value: “hello world, on yeah!” }</p>
-</blockquote>
-
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
         </div>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
-        </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://the0hu.github.io/2022/04/28/rust%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%A4%9A%E6%9C%88/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2022/06/13/httpie/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          httpie
-        
-      </div>
-    </a>
   
   
-    <a href="/2022/03/19/%E5%AD%A6%E4%B9%A0rust%E7%9A%84%E7%AC%AC%E4%B8%80%E5%A4%A9/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">学习rust的第一天</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-        <div class="toc-container tooltip-left">
-            <i class="icon-font icon-category"></i>
-            <div class="tooltip tooltip-east">
-                <span class="tooltip-item">
-                </span>
-                <span class="tooltip-content">
-                    <div class="toc-article">
-                    目录，不存在的…
-                    </div>
-                </span>
-            </div>
-        </div>
-        
-    </div>
-</aside>
-
-
-
-  
-  
+    </div></section>
   
 
-  
-
-  
-
-  
+    
 
 
           </div>
@@ -381,8 +235,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
-		isArchive: false,
+		isPost: false,
+		isArchive: true,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
